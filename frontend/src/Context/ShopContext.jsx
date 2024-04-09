@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState,useEffect } from 'react'
 import all_products from '../Components/Assests/all_products';
 
 export const ShopContext =  createContext(null);
@@ -14,6 +14,14 @@ const getDefaultCart = () =>{
 const ShopContextProvider = (props) =>{
     const [cartItems,setCartItems] = useState(getDefaultCart());
     console.log(cartItems);
+
+    useEffect(() => {
+        // Retrieve cart items from localStorage if exists
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
+        if (storedCartItems) {
+          setCartItems(storedCartItems);
+        }
+      }, []);
 
     const addToCart = (itemId) =>{
         setCartItems(
